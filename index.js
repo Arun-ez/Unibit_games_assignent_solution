@@ -105,8 +105,56 @@ class Combination {
     all the possible Combinations of multiple digits that sum upto a target value 
     */
 
+    /*   ***** Recursive Backtracking Solution [ O(2^n) ] ******   */
+    findMultiDigitCombinations = () => {
+
+        /* Taking set to store combinations and to avoid duplicate combinations */
+        const set = new Set();
+
+        /* This bucket will store the current combination */
+        const currentCombination = [];
+
+        const backtrack = (index, target) => {
+
+            if (target === 0) {
+                set.add(JSON.stringify(currentCombination));
+                return;
+            }
+
+            if (target < 0) {
+                return;
+            }
+
+            for (let i = index; i < this.input.length; i++) {
+
+                if (this.input[i] <= target) {
+
+                    /* pushing the current element to current combination store */
+                    currentCombination.push(this.input[i]);
+
+                    /* recursive call with updated index and target value after substracted current digit */
+                    backtrack(i + 1, target - this.input[i], currentCombination);
+
+                    /* Removing the last element from current ombinations
+                    to calculate result for the next index of the loop */
+                    currentCombination.pop();
+                }
+            }
+        }
 
 
+        backtrack(0, this.target);
+
+        const combinations = Array.from(set).map((item) => JSON.parse(item))
+
+        this.combinations = combinations;
+
+        console.log(' ');
+        console.log(`Multi Digit Combinations for the target value ${this.target} using Backtracking =>>`, combinations);
+        console.log(' ');
+
+
+    }
 }
 
 
@@ -124,7 +172,7 @@ merged and sorted =>> [ -6,-4,1,2,2,2,3,8];
 */
 
 
-/* Creating an instance on Combination Class */
+/* Creating an instance of Combination Class */
 const result1 = new Combination(input, target);
 
 /* Generating combinations using Brute Force Method */
@@ -146,3 +194,14 @@ combinations =>>  [ [ 1,3,2,2], [8,-4,2,2],....,[n,n,n,n] ]
 
 */
 
+/* Creating an instance of Combination Class */
+const result2 = new Combination(input, target * 2);
+
+/* Generating combinations using Backtracking */
+result2.findMultiDigitCombinations();
+
+/* Merging the combinations */
+result2.merge();
+
+/* Sorting the merged results */
+result2.sort();
