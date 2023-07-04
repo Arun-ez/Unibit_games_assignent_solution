@@ -124,14 +124,14 @@ class Combination {
             /* target is 0 means we get a subset that sums to the initial target value */
             if (target === 0) {
 
-                /* Pushing the the combination in string format to avoid duplicate */
+                /* Pushing the combination in string format to avoid duplicate */
                 set.add(JSON.stringify(currentCombination));
                 return;
             }
 
             for (let i = index; i < this.input.length; i++) {
 
-                /* Making sure current digit wont be bigger than target value */
+                /* Making sure current digit won't be bigger than target value */
                 if (this.input[i] <= target) {
 
                     /* pushing the current element to current combination store */
