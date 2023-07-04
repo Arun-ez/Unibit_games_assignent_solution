@@ -9,7 +9,7 @@ class Combination {
     }
 
 
-    /* This method used to merge the generated combinctions */
+    /* This method used to merge the generated combinations */
     merge = () => {
         let merged = []
 
@@ -23,12 +23,12 @@ class Combination {
         console.log(' ');
     }
 
-    /* This method used to sort the merged result */
+    /* This method used to sort the merged result in ascending order */
     sort = () => {
 
         this.merged.sort((elm1, elm2) => elm1 - elm2)
 
-        console.log(`Arter sorting the result =>> [ ${this.merged.join(" , ")} ]`);
+        console.log(`Arter sorting the result in ascending order =>> [ ${this.merged.join(" , ")} ]`);
         console.log(' ');
     }
 
@@ -37,6 +37,7 @@ class Combination {
     The following methods are used to calculate
     all the possible Combinations of two digits that sum upto a target value 
     */
+
 
     /*   ***** Brute Force Solution [ O(n^2) ] ******   */
     findCombinationsBruteForce = () => {
@@ -84,8 +85,11 @@ class Combination {
 
         for (let i = 0; i < this.input.length; i++) {
 
+            /* Canculating the remaining value to fullfill the target */
             const remains = Math.abs(this.target - this.input[i]);
 
+            /* The set contains the remaining value means we get 
+            a combination that sums upto the target value  */
             if (set.has(remains)) {
                 combinations.push([remains, this.input[i]]);
             }
@@ -105,6 +109,7 @@ class Combination {
     all the possible Combinations of multiple digits that sum upto a target value 
     */
 
+
     /*   ***** Recursive Backtracking Solution [ O(2^n) ] ******   */
     findMultiDigitCombinations = () => {
 
@@ -116,17 +121,17 @@ class Combination {
 
         const backtrack = (index, target) => {
 
+            /* target is 0 means we get a subset that sums to the initial target value */
             if (target === 0) {
-                set.add(JSON.stringify(currentCombination));
-                return;
-            }
 
-            if (target < 0) {
+                /* Pushing the the combination in string format to avoid duplicate */
+                set.add(JSON.stringify(currentCombination));
                 return;
             }
 
             for (let i = index; i < this.input.length; i++) {
 
+                /* Making sure current digit wont be bigger than target value */
                 if (this.input[i] <= target) {
 
                     /* pushing the current element to current combination store */
@@ -145,6 +150,7 @@ class Combination {
 
         backtrack(0, this.target);
 
+        /* Converting set to an Array and parsing the stringified objects to original format */
         const combinations = Array.from(set).map((item) => JSON.parse(item))
 
         this.combinations = combinations;
@@ -164,11 +170,9 @@ const target = 4;
 
 
 /* 
-
 --- output for 4 ---
 combinations =>> [ [1,3],[2,2],[-4,8],[-6,2] ];
 merged and sorted =>> [ -6,-4,1,2,2,2,3,8];
-
 */
 
 
@@ -191,7 +195,6 @@ result1.sort();
 /*
 --- output for 8 ---
 combinations =>>  [ [ 1,3,2,2], [8,-4,2,2],....,[n,n,n,n] ]
-
 */
 
 /* Creating an instance of Combination Class */
